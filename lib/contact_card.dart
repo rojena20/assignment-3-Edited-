@@ -27,21 +27,32 @@ class ContactCard extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(25.0),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              "Name: ${contactCardModel.contactName}",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Name: ${contactCardModel.contactName}",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(
+                  "Phone: ${contactCardModel.contactPhone}",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              "Phone: ${contactCardModel.contactPhone}",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w400,
+            GestureDetector(
+              child: Icon(
+                Icons.delete,
+                color: Colors.redAccent,
               ),
             ),
           ],
