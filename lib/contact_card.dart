@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 
 import 'models/contact_card_model.dart';
 
-class ContactCard extends StatelessWidget {
+class ContactCard extends StatefulWidget {
   ContactCardModel contactCardModel;
+  Function(ContactCardModel) delete;
 
-  ContactCard({
-    super.key,
-    required this.contactCardModel,
-  });
+  ContactCard(
+      {super.key, required this.contactCardModel, required this.delete});
 
+  @override
+  State<ContactCard> createState() => _ContactCardState();
+}
+
+class _ContactCardState extends State<ContactCard> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: contactCardModel.isVisible,
+      visible: widget.contactCardModel.isVisible,
       child: Container(
         padding: EdgeInsets.symmetric(
           vertical: 15.0,
@@ -34,14 +38,14 @@ class ContactCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Name: ${contactCardModel.contactName}",
+                  "Name: ${widget.contactCardModel.contactName}",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
                 Text(
-                  "Phone: ${contactCardModel.contactPhone}",
+                  "Phone: ${widget.contactCardModel.contactPhone}",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w400,
@@ -50,6 +54,10 @@ class ContactCard extends StatelessWidget {
               ],
             ),
             GestureDetector(
+              onTap: () {
+                widget.delete(widget.contactCardModel);
+                setState(() {});
+              },
               child: Icon(
                 Icons.delete,
                 color: Colors.redAccent,

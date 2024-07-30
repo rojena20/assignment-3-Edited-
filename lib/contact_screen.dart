@@ -19,7 +19,7 @@ class _ContactScreenState extends State<ContactScreen> {
   String phone = "";
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
-  List<ContactCard> cards = [];
+  List<ContactCardModel> contactCardModels = [];
   final _formKey = GlobalKey<FormState>();
 
   String? nameValidation(String? input) {
@@ -36,6 +36,10 @@ class _ContactScreenState extends State<ContactScreen> {
     } else {
       return null;
     }
+  }
+
+  void deleteContact(ContactCardModel contactCardMod) {
+    contactCardMod.isVisible = false;
   }
 
   @override
@@ -98,8 +102,8 @@ class _ContactScreenState extends State<ContactScreen> {
                                 backgroundColor: WidgetStateProperty.all<Color>(
                                   Color.fromARGB(255, 33, 150, 243),
                                 ),
-                                shape:
-                                    WidgetStateProperty.all<RoundedRectangleBorder>(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
                                   ),
@@ -108,14 +112,13 @@ class _ContactScreenState extends State<ContactScreen> {
                               onPressed: () {
                                 name = _nameController.text;
                                 phone = _phoneController.text;
-                                if (_formKey.currentState?.validate() ?? false) {
-                                  cards.add(
-                                    ContactCard(
-                                      contactCardModel: ContactCardModel(
-                                        contactName: name,
-                                        contactPhone: phone,
-                                        isVisible: true,
-                                      ),
+                                if (_formKey.currentState?.validate() ??
+                                    false) {
+                                  contactCardModels.add(
+                                    ContactCardModel(
+                                      contactName: name,
+                                      contactPhone: phone,
+                                      isVisible: true,
                                     ),
                                   );
                                 }
@@ -138,10 +141,15 @@ class _ContactScreenState extends State<ContactScreen> {
                     ),
                   ],
                 ),
-              ),// column end
+              ),
               Column(
                 children: [
-                  for (var card in cards) card,
+                  for (var contactCardModel in contactCardModels)
+                    ContactCard(
+                      key: UniqueKey(),
+                      contactCardModel: contactCardModel,
+                      delete: deleteContact,
+                    ),
                 ],
               ),
             ],

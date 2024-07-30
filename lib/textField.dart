@@ -8,12 +8,13 @@ class Textfield extends StatelessWidget {
   TextEditingController controller;
   String? Function(String?) valid;
 
-  Textfield(
-      {super.key,
-      required this.textfiledModel,
-      required this.keyboardType,
-      required this.controller,
-      required this.valid,});
+  Textfield({
+    super.key,
+    required this.textfiledModel,
+    required this.keyboardType,
+    required this.controller,
+    required this.valid,
+  });
 
   @override
   Widget build(BuildContext context) {
