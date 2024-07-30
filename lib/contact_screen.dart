@@ -19,7 +19,7 @@ class _ContactScreenState extends State<ContactScreen> {
   String phone = "";
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
-  List<ContactCardModel> contactCardModels = [];
+  List<ContactCardModel> cards = [];
   final _formKey = GlobalKey<FormState>();
 
   String? nameValidation(String? input) {
@@ -114,7 +114,7 @@ class _ContactScreenState extends State<ContactScreen> {
                                 phone = _phoneController.text;
                                 if (_formKey.currentState?.validate() ??
                                     false) {
-                                  contactCardModels.add(
+                                  cards.add(
                                     ContactCardModel(
                                       contactName: name,
                                       contactPhone: phone,
@@ -142,15 +142,19 @@ class _ContactScreenState extends State<ContactScreen> {
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  for (var contactCardModel in contactCardModels)
-                    ContactCard(
-                      key: UniqueKey(),
-                      contactCardModel: contactCardModel,
-                      delete: deleteContact,
-                    ),
-                ],
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      for (var contactCardModel in cards)
+                        ContactCard(
+                          key: UniqueKey(),
+                          contactCardModel: contactCardModel,
+                          delete: deleteContact,
+                        ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
